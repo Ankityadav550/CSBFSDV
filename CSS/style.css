@@ -10,7 +10,7 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: green;
 } */
-#home{
+/* #home{
     background-color: aqua;
 }
 
@@ -22,4 +22,39 @@
 
 h2{
     background-color: beigeKO;
+} */
+
+ /* > is used for child relation */
+ /* + right  immediate adjacent sibling */
+ /* ~ both all siblings */
+div~p{
+    background-color: brown;
+    color: white;
+}
+
+/* p:hover{
+    font-size: large;
+    background-color: black;
+    color: white;
+} */
+
+p::after{
+    content: " Abes Engineering College";
+    background-color: aqua;
+    color: black;
+}
+
+p::before{
+    content: "CSBFSDV ";
+    background-color: aqua;
+    color: black;
+}
+
+p::selection{
+    background-color: rgb(165, 42, 75);
+    color: white;
+}
+div p:nth-child(1){
+    background: rgb(56, 130, 49);
+    color :white
 }
