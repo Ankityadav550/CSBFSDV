@@ -1,0 +1,39 @@
+    /* *{
+        background: rgb(212, 212, 158);
+    } */
+
+.parent{
+    display: flex;
+    background: red;
+    border: 2px solid black;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    
+}
+
+.child1{
+    height: 200px;
+    width: 200px;
+    background: aqua;
+    border: 5px solid green;
+    order: 3;
+}
+.child2{
+    height: 200px;
+    width: 200px;
+    background: rgb(166, 201, 25);
+    border: 5px dotted green;
+}
+.child3{
+    height: 200px;
+    width: 200px;
+    background: rgb(190, 222, 169);
+    border: 5px solid green;        
+}
+.child4{
+    height: 200px;
+    width: 200px;
+    background: rgb(255, 123, 0);
+    border: 5px dotted green;
+}
