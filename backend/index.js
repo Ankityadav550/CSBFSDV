@@ -8,11 +8,15 @@ const apidata=require('./apicalling');
 const http = require('http');
 const PORT=4004; 
 
-const server=http.createServer((req,res)=>{
+const server=http.createServer(async(req,res)=>{
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     // res.setHeader('Content-type','application/json');
     // res.end(JSON.stringify({message:"Welcome to CSBFSDV Backend"}));
 
-    if(req.url=="/msg" && req.method=="GET"){
+   if(req.url=="/msg" && req.method=="GET"){
         res.setHeader('Content-type','text/html');
         res.end("<h1>Welcome to CSBFSDV Backend</h1>");
     }
@@ -29,7 +33,7 @@ const server=http.createServer((req,res)=>{
 
     else if(req.url=="/data" && req.method=="GET"){
         res.setHeader("Content-type",'application/json');
-        const jsondata = apidata(10,20);
+        const jsondata =await apidata(20,200);
         res.end(JSON.stringify({msg:jsondata}));
     }
 
@@ -44,4 +48,5 @@ const server=http.createServer((req,res)=>{
 server.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);
 });
+
 
