@@ -1,7 +1,7 @@
 const http=require('http');
 const PORT=4004;
 const apidata=require('./apiCalling')
-const dataWrite=require('./usefsmodule')
+const {dataWrite,dataread,daleteFile,deleteFileAsync}=require('./usefsmodule')
 const server=http.createServer(async (req,res)=>{
 
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -35,6 +35,54 @@ else if(req.url=="/datawrite" && req.method=="GET"){
 res.setHeader("Content-Type","application/json");
       const jsondata=dataWrite();
 res.end(JSON.stringify({msg:jsondata}))
+
+}
+
+
+else if(req.url=="/dataread" && req.method=="GET"){
+res.setHeader("Content-Type","application/json");
+      const jsondata=dataread();
+res.end(JSON.stringify({msg:jsondata}))
+
+}
+
+else if(req.url=="/deletefile" && req.method=="GET"){
+res.setHeader("Content-Type","application/json");
+      const jsondata=daleteFile();
+res.end(JSON.stringify({msg:jsondata}))
+
+}
+
+else if(req.url=="/datareadasync" && req.method=="GET"){
+res.setHeader("Content-Type","application/json");
+      const jsondata=await deleteFileAsync();
+res.end(JSON.stringify({msg:jsondata}))
+
+}
+
+
+// fetch the data and store the data in a file  
+else if(req.url=="/register" && req.method=="POST"){
+
+    let arr=[];
+    let body="";
+    req.on('data',chunks=>{
+        body+=chunks;
+    })
+
+    req.on('end',()=>{
+        const {name,email,password}=JSON.parse(body); // parse is used to convert the chunk data into json format
+        // arr.push({name,email,password});
+        // dataWrite(arr);
+        console.log(name + " " + email + " " + password);
+
+
+res.setHeader("Content-Type","application/json");
+    //   const jsondata=await deleteFileAsync();
+res.end(JSON.stringify({msg:"student added successfully!!!"}))
+    })
+
+
 
 }
 
