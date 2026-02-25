@@ -1,4 +1,5 @@
 const http=require('http');
+const fs=require('fs').promises;
 const PORT=4004;
 const apidata=require('./apiCalling')
 const {dataWrite,dataread,daleteFile,deleteFileAsync}=require('./usefsmodule')
@@ -70,16 +71,24 @@ else if(req.url=="/register" && req.method=="POST"){
         body+=chunks;
     })
 
-    req.on('end',()=>{
+    req.on('end', async ()=>{
         const {name,email,password}=JSON.parse(body); // parse is used to convert the chunk data into json format
         // arr.push({name,email,password});
         // dataWrite(arr);
-        console.log(name + " " + email + " " + password);
+        // console.log(name + " " + email + " " + password);
+        const fdata=await fs.readFile('Student.json',{encoding:'utf-8'})
+        arr=JSON.parse(fdata)
+
+        const status=arr.find(ele=>ele.email==email)
+        if(status){
+            res.end(JSON.stringify({msg:"User already exists"}))
+        }else{
+            arr.push({name,email,password})
+            await fs.writeFile('Student.json',JSON.stringify(arr,null,2))
+            res.end(JSON.stringify({msg:"User registered successfully"}))
+        }
 
 
-res.setHeader("Content-Type","application/json");
-    //   const jsondata=await deleteFileAsync();
-res.end(JSON.stringify({msg:"student added successfully!!!"}))
     })
 
 
