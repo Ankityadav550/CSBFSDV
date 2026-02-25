@@ -95,6 +95,33 @@ else if(req.url=="/register" && req.method=="POST"){
 
 }
 
+else if(req.url=="/login" && req.method=="POST"){
+    let arr=[];
+    let body="";
+    req.on('data',chunks=>{
+        body+=chunks;
+    })
+    req.on('end', async ()=>{
+        const {email,password}=JSON.parse(body); // parse is used to convert the chunk data into json format
+        // arr.push({name,email,password});
+        // dataWrite(arr);
+        // console.log(name + " " + email + " " + password);
+        const fdata=await fs.readFile('Student.json',{encoding:'utf-8'})
+        arr=JSON.parse(fdata)
+        const status=arr.find(ele=>ele.email==email && ele.password==password)
+        if(status){
+            res.setHeader("Content-Type","application/json");
+            res.end(JSON.stringify({msg:"Login successful"}))
+        }else{
+            res.setHeader("Content-Type","application/json");
+            res.end(JSON.stringify({msg:"Invalid email or password"}))
+        }
+
+
+    })
+
+}
+
 else{
 res.setHeader("Content-Type","text/html");
    res.end("<h2 style=color:red>Invalid request</h2>") 
